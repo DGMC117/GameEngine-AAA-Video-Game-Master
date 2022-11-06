@@ -10,6 +10,7 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleRenderExercise;
 class ModuleEditor;
+class ModuleProgram;
 
 class Application
 {
@@ -27,6 +28,8 @@ public:
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
 	ModuleEditor* edit = nullptr;
+	ModuleProgram* program = nullptr;
+	ModuleRenderExercise* exercise = nullptr;
 
 private:
 

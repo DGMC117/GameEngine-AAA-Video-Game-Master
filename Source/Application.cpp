@@ -4,6 +4,8 @@
 #include "ModuleRender.h"
 #include "ModuleInput.h"
 #include "ModuleEditor.h"
+#include "ModuleProgram.h"
+#include "ModuleRenderExercise.h"
 
 using namespace std;
 
@@ -14,6 +16,8 @@ Application::Application()
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(edit = new ModuleEditor());
+	modules.push_back(program = new ModuleProgram());
+	modules.push_back(exercise = new ModuleRenderExercise());
 }
 
 Application::~Application()
