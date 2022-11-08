@@ -34,6 +34,13 @@ bool ModuleRender::Init()
 	GLenum err = glewInit();
 	// TODO: Check for errors
 	LOG("Using Glew %s", glewGetString(GLEW_VERSION)); // Should be 2.0
+	
+	// Enable the debug callback
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	glDebugMessageCallback(openglCallbackFunction, nullptr);
+	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, true);
 
 	// OpenGL initialization
 	LOG("Vendor: %s", glGetString(GL_VENDOR));
@@ -50,9 +57,9 @@ bool ModuleRender::Init()
 
 update_status ModuleRender::PreUpdate()
 {
-	int *w = 0, *h = 0;
-	SDL_GetWindowSize(App->window->window, w, h);
-	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
+	int w, h;
+	SDL_GetWindowSize(App->window->window, &w, &h);
+	glViewport(0, 0, w, h);
 	glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

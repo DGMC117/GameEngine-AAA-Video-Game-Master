@@ -1,8 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderExercise.h"
-#include "glew.h"
 #include "ModuleProgram.h"
+#include "glew.h"
 
 ModuleRenderExercise::ModuleRenderExercise()
 {
@@ -16,18 +16,22 @@ ModuleRenderExercise::~ModuleRenderExercise()
 // Called before render is available
 bool ModuleRenderExercise::Init()
 {
+	LOG("Initializing Render Exercise Module");
+
 	// Create VBO
-	float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+	float vtx_data[] = { 
+		-1.0f, -1.0f, 0.0f, 
+		 1.0f, -1.0f, 0.0f, 
+		 0.0f,  1.0f, 0.0f 
+	};
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vtx_data), vtx_data, GL_STATIC_DRAW);
 
 	// Create and Link Program
-	char* vss = App->program->LoadShaderSource("default_vertex.glsl");
-	char* fss = App->program->LoadShaderSource("default_fragment.glsl");
-	unsigned vs = App->program->CompileShader(GL_VERTEX_SHADER, vss);
-	unsigned fs = App->program->CompileShader(GL_FRAGMENT_SHADER, fss);
-	program = App->program->CreateProgram(vs, fs);
+	program = App->program->CreateProgram(
+		App->program->CompileShader(GL_VERTEX_SHADER, App->program->LoadShaderSource(".\\..\\Source\\default_vertex.glsl")),
+		App->program->CompileShader(GL_FRAGMENT_SHADER, App->program->LoadShaderSource(".\\..\\Source\\default_fragment.glsl")));
 
 	return true;
 }
