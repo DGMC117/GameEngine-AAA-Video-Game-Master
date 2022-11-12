@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "SDL.h"
+#include "imgui_impl_sdl.h"
 
 ModuleInput::ModuleInput()
 {}
@@ -43,6 +44,7 @@ update_status ModuleInput::Update()
                     App->renderer->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
                 break;
         }
+        ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
     }
 
     keyboard = SDL_GetKeyboardState(NULL);

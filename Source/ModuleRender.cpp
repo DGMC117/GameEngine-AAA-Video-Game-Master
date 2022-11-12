@@ -28,7 +28,7 @@ bool ModuleRender::Init()
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
-	SDL_GL_CreateContext(App->window->window);
+	context = SDL_GL_CreateContext(App->window->window);
 
 	// glew initialization
 	GLenum err = glewInit();
@@ -95,3 +95,4 @@ void ModuleRender::WindowResized(unsigned width, unsigned height)
 {
 }
 
+void* ModuleRender::GetContext() { return context; }
