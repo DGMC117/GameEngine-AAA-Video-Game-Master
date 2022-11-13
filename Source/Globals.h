@@ -20,7 +20,7 @@ enum update_status
 #define SCREEN_HEIGHT 720
 #define FULLSCREEN false
 #define VSYNC true
-#define TITLE "Super Awesome Engine"
+#define TITLE "Chief Engine"
 
 static void APIENTRY openglCallbackFunction(
 	GLenum source,

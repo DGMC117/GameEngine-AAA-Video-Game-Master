@@ -102,4 +102,5 @@ public:
 
 private:
 	bool *console_open = nullptr;
+	bool *demo_open = nullptr;
 };

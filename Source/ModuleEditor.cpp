@@ -33,6 +33,8 @@ bool ModuleEditor::Init()
 
 	console_open = new bool;
 	*console_open = true;
+	demo_open = new bool;
+	*demo_open = false;
 
 	return true;
 }
@@ -49,11 +51,29 @@ update_status ModuleEditor::PreUpdate()
 // Called every draw update
 update_status ModuleEditor::Update()
 {
-	//ImGui::ShowDemoWindow();
+	if (*demo_open) ImGui::ShowDemoWindow(demo_open);
 
+	// Console Window
 	if (*console_open) {
 		editor_console.Draw("Console", console_open);
 	}
+
+	// Main Menu Bar
+	if (ImGui::BeginMainMenuBar()) {
+		if (ImGui::BeginMenu("View")) {
+			ImGui::MenuItem("Console", NULL, console_open);
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Help")) {
+			ImGui::MenuItem("ImGui Demo", NULL, demo_open);
+			if (ImGui::MenuItem("Documentation")) App->RequestBrowser("https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/wiki");
+			if (ImGui::MenuItem("Download latest")) App->RequestBrowser("https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/releases");
+			if (ImGui::MenuItem("Report a bug")) App->RequestBrowser("https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/issues");
+			//if (ImGui::MenuItem("About")) about->SwitchActive();
+			ImGui::EndMenu();
+		}
+	}
+	ImGui::EndMainMenuBar();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -75,6 +95,7 @@ bool ModuleEditor::CleanUp()
 	ImGui::DestroyContext();
 
 	delete console_open;
+	delete demo_open;
 
 	return true;
 }
