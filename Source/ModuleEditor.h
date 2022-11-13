@@ -102,6 +102,10 @@ public:
 
 private:
 	bool *console_open = nullptr;
-	bool* demo_open = nullptr;
-	bool* about_open = nullptr;
+	bool *demo_open = nullptr;
+	bool *about_open = nullptr;
+	bool *configuration_open = nullptr;
+	float *ms_log = nullptr;
+	float *fps_log = nullptr;
+	unsigned last_ms_log;
 };
