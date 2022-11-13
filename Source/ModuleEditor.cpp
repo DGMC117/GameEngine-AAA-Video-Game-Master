@@ -3,12 +3,12 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleEditor.h"
-#include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
 ModuleEditor::ModuleEditor()
 {
+	editor_console = EditorConsole();
 }
 
 // Destructor
@@ -31,6 +31,9 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 440");
 
+	console_open = new bool;
+	*console_open = true;
+
 	return true;
 }
 
@@ -46,7 +49,11 @@ update_status ModuleEditor::PreUpdate()
 // Called every draw update
 update_status ModuleEditor::Update()
 {
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
+
+	if (*console_open) {
+		editor_console.Draw("Console", console_open);
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -66,6 +73,8 @@ bool ModuleEditor::CleanUp()
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+
+	delete console_open;
 
 	return true;
 }
