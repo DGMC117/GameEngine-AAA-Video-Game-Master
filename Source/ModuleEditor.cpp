@@ -31,10 +31,9 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 440");
 
-	console_open = new bool;
-	*console_open = true;
-	demo_open = new bool;
-	*demo_open = false;
+	console_open = new bool(true);
+	demo_open = new bool(false);
+	about_open = new bool(false);
 
 	return true;
 }
@@ -69,11 +68,30 @@ update_status ModuleEditor::Update()
 			if (ImGui::MenuItem("Documentation")) App->RequestBrowser("https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/wiki");
 			if (ImGui::MenuItem("Download latest")) App->RequestBrowser("https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/releases");
 			if (ImGui::MenuItem("Report a bug")) App->RequestBrowser("https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/issues");
-			//if (ImGui::MenuItem("About")) about->SwitchActive();
+			ImGui::MenuItem("About", NULL, about_open);
 			ImGui::EndMenu();
 		}
 	}
 	ImGui::EndMainMenuBar();
+
+	// About Window
+	if (*about_open) {
+		if (ImGui::Begin("About", about_open)) {
+			if (ImGui::CollapsingHeader(TITLE)) {
+				ImGui::Text("Game Engine developed for the \"Advanced Programming for AAA Video Games\" master's degree.");
+				ImGui::Text("Author: David Garcia De Mercado");
+			}
+			if (ImGui::CollapsingHeader("Libraries")) {
+				ImGui::BulletText("SDL 2.0");
+				ImGui::BulletText("glew 2.1.0");
+				ImGui::BulletText("imgui 1.88");
+			}
+			if (ImGui::CollapsingHeader("License")) {
+				ImGui::Text("MIT License");
+			}
+			ImGui::End();
+		}
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -96,6 +114,7 @@ bool ModuleEditor::CleanUp()
 
 	delete console_open;
 	delete demo_open;
+	delete about_open;
 
 	return true;
 }
