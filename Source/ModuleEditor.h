@@ -98,6 +98,10 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void DrawMainMenuBar();
+	void DrawAboutWindow();
+	void DrawConfigurationWindow();
+
 	EditorConsole editor_console;
 
 private:
@@ -108,4 +112,5 @@ private:
 	float *ms_log = nullptr;
 	float *fps_log = nullptr;
 	unsigned last_ms_log;
+	int fps_offset;
 };

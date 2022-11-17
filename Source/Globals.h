@@ -22,6 +22,11 @@ enum update_status
 #define VSYNC true
 #define TITLE "Chief Engine"
 
+// Strings -----------------
+#define REPO_WIKI_LINK "https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/wiki"
+#define REPO_RELEASE_LINK "https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/releases"
+#define REPO_ISSUES_LINK "https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/issues"
+
 static void APIENTRY openglCallbackFunction(
 	GLenum source,
 	GLenum type,
