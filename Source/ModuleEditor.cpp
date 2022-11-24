@@ -5,15 +5,20 @@
 #include "ModuleEditor.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+#include "GUIConsole.h"
+
+using namespace std;
 
 ModuleEditor::ModuleEditor()
 {
-	editor_console = EditorConsole();
+	gui_elements.push_back(console = new GUIConsole("Console"));
 }
 
 // Destructor
 ModuleEditor::~ModuleEditor()
 {
+	for (list<GUIElement*>::iterator it = gui_elements.begin(); it != gui_elements.end(); ++it)
+		delete* it;
 }
 
 // Called before render is available
@@ -31,7 +36,6 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->GetContext());
 	ImGui_ImplOpenGL3_Init("#version 440");
 
-	console_open = new bool(true);
 	demo_open = new bool(false);
 	about_open = new bool(false);
 	configuration_open = new bool(false);
@@ -62,9 +66,10 @@ update_status ModuleEditor::PreUpdate()
 update_status ModuleEditor::Update()
 {
 	// Draw ImGui Elements
+	for (list<GUIElement*>::iterator it = gui_elements.begin(); it != gui_elements.end(); ++it)
+		(*it)->Draw();
 	DrawMainMenuBar();
 	if (*demo_open) ImGui::ShowDemoWindow(demo_open);
-	if (*console_open) editor_console.Draw("Console", console_open);
 	if (*about_open) DrawAboutWindow();
 	if (*configuration_open) DrawConfigurationWindow();
 
@@ -89,7 +94,6 @@ bool ModuleEditor::CleanUp()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
-	delete console_open;
 	delete demo_open;
 	delete about_open;
 	delete configuration_open;
@@ -102,7 +106,7 @@ bool ModuleEditor::CleanUp()
 void ModuleEditor::DrawMainMenuBar() {
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("View")) {
-			ImGui::MenuItem("Console", NULL, console_open);
+			ImGui::MenuItem("Console", NULL, console->con_open);
 			ImGui::MenuItem("Configuration", NULL, configuration_open);
 			ImGui::EndMenu();
 		}
