@@ -143,7 +143,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="GUIAbout.cpp" />
     <ClCompile Include="GUIConsole.cpp" />
+    <ClCompile Include="GUIMainMenuBar.cpp" />
     <ClCompile Include="libs\imgui\imgui.cpp" />
     <ClCompile Include="libs\imgui\imgui_demo.cpp" />
     <ClCompile Include="libs\imgui\imgui_draw.cpp" />
@@ -164,8 +166,10 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Dummy.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="GUIAbout.h" />
     <ClInclude Include="GUIConsole.h" />
     <ClInclude Include="GUIElement.h" />
+    <ClInclude Include="GUIMainMenuBar.h" />
     <ClInclude Include="libs\glew-2.1.0\include\GL\eglew.h" />
     <ClInclude Include="libs\glew-2.1.0\include\GL\glew.h" />
     <ClInclude Include="libs\glew-2.1.0\include\GL\glxew.h" />

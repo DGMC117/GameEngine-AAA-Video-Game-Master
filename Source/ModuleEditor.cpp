@@ -6,12 +6,16 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "GUIConsole.h"
+#include "GUIAbout.h"
+#include "GUIMainMenuBar.h"
 
 using namespace std;
 
 ModuleEditor::ModuleEditor()
 {
-	gui_elements.push_back(console = new GUIConsole("Console"));
+	gui_elements.push_back(console = new GUIConsole());
+	gui_elements.push_back(about = new GUIAbout());
+	gui_elements.push_back(main_menu = new GUIMainMenuBar());
 }
 
 // Destructor
@@ -37,8 +41,8 @@ bool ModuleEditor::Init()
 	ImGui_ImplOpenGL3_Init("#version 440");
 
 	demo_open = new bool(false);
-	about_open = new bool(false);
 	configuration_open = new bool(false);
+
 	ms_log = new float[60];
 	fps_log = new float[60];
 	last_ms_log = SDL_GetTicks();
@@ -68,9 +72,7 @@ update_status ModuleEditor::Update()
 	// Draw ImGui Elements
 	for (list<GUIElement*>::iterator it = gui_elements.begin(); it != gui_elements.end(); ++it)
 		(*it)->Draw();
-	DrawMainMenuBar();
 	if (*demo_open) ImGui::ShowDemoWindow(demo_open);
-	if (*about_open) DrawAboutWindow();
 	if (*configuration_open) DrawConfigurationWindow();
 
 	ImGui::Render();
@@ -95,49 +97,11 @@ bool ModuleEditor::CleanUp()
 	ImGui::DestroyContext();
 
 	delete demo_open;
-	delete about_open;
 	delete configuration_open;
 	delete ms_log;
 	delete fps_log;
 
 	return true;
-}
-
-void ModuleEditor::DrawMainMenuBar() {
-	if (ImGui::BeginMainMenuBar()) {
-		if (ImGui::BeginMenu("View")) {
-			ImGui::MenuItem("Console", NULL, console->con_open);
-			ImGui::MenuItem("Configuration", NULL, configuration_open);
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Help")) {
-			ImGui::MenuItem("ImGui Demo", NULL, demo_open);
-			if (ImGui::MenuItem("Documentation")) App->RequestBrowser(REPO_WIKI_LINK);
-			if (ImGui::MenuItem("Download latest")) App->RequestBrowser(REPO_RELEASE_LINK);
-			if (ImGui::MenuItem("Report a bug")) App->RequestBrowser(REPO_ISSUES_LINK);
-			ImGui::MenuItem("About", NULL, about_open);
-			ImGui::EndMenu();
-		}
-	}
-	ImGui::EndMainMenuBar();
-}
-
-void ModuleEditor::DrawAboutWindow() {
-	if (ImGui::Begin("About", about_open)) {
-		if (ImGui::CollapsingHeader(TITLE)) {
-			ImGui::Text("Game Engine developed for the \"Advanced Programming for AAA Video Games\" master's degree.");
-			ImGui::Text("Author: David Garcia De Mercado");
-		}
-		if (ImGui::CollapsingHeader("Libraries")) {
-			ImGui::BulletText("SDL 2.0");
-			ImGui::BulletText("glew 2.1.0");
-			ImGui::BulletText("imgui 1.88");
-		}
-		if (ImGui::CollapsingHeader("License")) {
-			ImGui::Text("MIT License");
-		}
-		ImGui::End();
-	}
 }
 
 void ModuleEditor::DrawConfigurationWindow() {

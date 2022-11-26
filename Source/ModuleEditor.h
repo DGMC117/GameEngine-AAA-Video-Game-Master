@@ -6,6 +6,8 @@
 #include "GUIElement.h"
 
 class GUIConsole;
+class GUIAbout;
+class GUIMainMenuBar;
 
 class ModuleEditor : public Module
 {
@@ -25,14 +27,16 @@ public:
 
 public:
 	GUIConsole* console;
+	GUIAbout* about;
+	GUIMainMenuBar* main_menu;
 
 private:
 
 	std::list<GUIElement*> gui_elements;
 
 	bool *demo_open = nullptr;
-	bool *about_open = nullptr;
 	bool *configuration_open = nullptr;
+
 	float *ms_log = nullptr;
 	float *fps_log = nullptr;
 	unsigned last_ms_log;
