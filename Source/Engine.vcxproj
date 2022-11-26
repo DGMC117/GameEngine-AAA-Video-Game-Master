@@ -104,7 +104,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\libs\imgui;.\libs\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\libs\SDL\lib\x64;.\libs\imgui;.\libs\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -161,6 +161,8 @@
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleRenderExercise.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="TimerMS.cpp" />
+    <ClCompile Include="TimerMuS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -276,6 +278,9 @@
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleRenderExercise.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="TimerMS.h" />
+    <ClInclude Include="TimerMuS.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default_fragment.glsl" />
