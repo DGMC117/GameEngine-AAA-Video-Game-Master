@@ -20,7 +20,7 @@ void GUIMainMenuBar::Draw() {
 			if (ImGui::MenuItem("Documentation")) App->RequestBrowser(REPO_WIKI_LINK);
 			if (ImGui::MenuItem("Download latest")) App->RequestBrowser(REPO_RELEASE_LINK);
 			if (ImGui::MenuItem("Report a bug")) App->RequestBrowser(REPO_ISSUES_LINK);
-			//ImGui::MenuItem("ImGui Demo", NULL, demo_open);
+			ImGui::MenuItem("ImGui Demo", NULL, App->edit->demo_open);
 			ImGui::MenuItem("About", NULL, App->edit->about->about_open);
 			ImGui::EndMenu();
 		}

@@ -32,9 +32,9 @@ public:
 	GUIConfiguration* config;
 	GUIMainMenuBar* main_menu;
 
+	bool* demo_open = nullptr; // TODO: Development only - delete after final version.
+
 private:
 
 	std::list<GUIElement*> gui_elements;
-
-	bool *demo_open = nullptr; // TODO: Development only - delete after final version.
 };
