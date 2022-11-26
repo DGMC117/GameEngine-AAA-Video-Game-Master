@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="GUIAbout.cpp" />
+    <ClCompile Include="GUIConfiguration.cpp" />
     <ClCompile Include="GUIConsole.cpp" />
     <ClCompile Include="GUIMainMenuBar.cpp" />
     <ClCompile Include="libs\imgui\imgui.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Dummy.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GUIAbout.h" />
+    <ClInclude Include="GUIConfiguration.h" />
     <ClInclude Include="GUIConsole.h" />
     <ClInclude Include="GUIElement.h" />
     <ClInclude Include="GUIMainMenuBar.h" />

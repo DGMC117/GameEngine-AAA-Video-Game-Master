@@ -7,6 +7,7 @@
 
 class GUIConsole;
 class GUIAbout;
+class GUIConfiguration;
 class GUIMainMenuBar;
 
 class ModuleEditor : public Module
@@ -28,17 +29,12 @@ public:
 public:
 	GUIConsole* console;
 	GUIAbout* about;
+	GUIConfiguration* config;
 	GUIMainMenuBar* main_menu;
 
 private:
 
 	std::list<GUIElement*> gui_elements;
 
-	bool *demo_open = nullptr;
-	bool *configuration_open = nullptr;
-
-	float *ms_log = nullptr;
-	float *fps_log = nullptr;
-	unsigned last_ms_log;
-	int fps_offset;
+	bool *demo_open = nullptr; // TODO: Development only - delete after final version.
 };

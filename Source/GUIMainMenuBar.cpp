@@ -3,6 +3,7 @@
 #include "ModuleEditor.h"
 #include "GUIConsole.h"
 #include "GUIAbout.h"
+#include "GUIConfiguration.h"
 
 GUIMainMenuBar::GUIMainMenuBar() {}
 
@@ -10,9 +11,9 @@ GUIMainMenuBar::~GUIMainMenuBar() {}
 
 void GUIMainMenuBar::Draw() {
 	if (ImGui::BeginMainMenuBar()) {
-		if (ImGui::BeginMenu("View")) {
+		if (ImGui::BeginMenu("Tools")) {
 			ImGui::MenuItem("Console", NULL, App->edit->console->con_open);
-			//ImGui::MenuItem("Configuration", NULL, configuration_open);
+			ImGui::MenuItem("Configuration", NULL, App->edit->config->conf_open);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help")) {
