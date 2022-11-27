@@ -1,5 +1,7 @@
 #include "GUIConfiguration.h"
 #include "SDL.h"
+#include "Application.h"
+#include "ModuleWindow.h"
 
 GUIConfiguration::GUIConfiguration() {
 	conf_open = new bool(false);
@@ -12,6 +14,7 @@ GUIConfiguration::GUIConfiguration() {
 	frame_timer.Start();
 	stable_timer.Start();
 	stable_frame_counter = 0;
+	vsync = VSYNC;
 }
 
 GUIConfiguration::~GUIConfiguration() {
@@ -44,6 +47,15 @@ void GUIConfiguration::Draw() {
 				ImGui::PlotHistogram("##framerateStable", &stable_fps_log[0], 60, stable_offset, title, 0.0f, 100.0f, ImVec2(310, 100));
 				sprintf_s(title, 50, "Milliseconds (Frame) %.1f", frame_ms_log[frame_offset]);
 				ImGui::PlotHistogram("##millisecondsCurr", &frame_ms_log[0], 60, frame_offset, title, 0.0f, 40.0f, ImVec2(310, 100));
+				ImGui::Checkbox("Vsync", &vsync);
+				ImGui::SliderInt("FPS Limit (0 = no limit)", &fps_limit, 0, 120);
+			}
+			if (ImGui::CollapsingHeader("Window")) {
+				ImGui::SliderFloat("Brightness", &App->window->brightness, 0.0f, 1.0f);
+				const char* screen_resolution_name = 
+					(App->window->current_screen_resolution >= 0 && App->window->current_screen_resolution < RES_COUNT) ?
+					screen_resolution_names[App->window->current_screen_resolution] : "Unknown";
+				ImGui::SliderInt("Screen Resolution", &App->window->current_screen_resolution, 0, RES_COUNT - 1, screen_resolution_name);
 			}
 			ImGui::End();
 		}

@@ -22,10 +22,6 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void DrawMainMenuBar();
-	void DrawAboutWindow();
-	void DrawConfigurationWindow();
-
 public:
 	GUIConsole* console;
 	GUIAbout* about;

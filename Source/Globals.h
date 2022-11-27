@@ -16,11 +16,28 @@ enum update_status
 };
 
 // Configuration -----------
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 720
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Chief Engine"
+enum screen_resolution {
+	RES_640_360,
+	RES_854_480,
+	RES_1280_720,
+	RES_1920_1080,
+	RES_2560_1440,
+	RES_3840_2160,
+	RES_7680_4320,
+	RES_COUNT
+};
+const char* const screen_resolution_names[RES_COUNT] = {
+	"640x360",
+	"854x480",
+	"1280x720",
+	"1920x1080",
+	"2560x1440",
+	"3840x2160",
+	"7680x4320"
+};
 
 // Strings -----------------
 #define REPO_WIKI_LINK "https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/wiki"

@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
+int ModuleWindow::current_screen_resolution;
+
 ModuleWindow::ModuleWindow()
 {
 }
@@ -25,8 +27,8 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH;
-		int height = SCREEN_HEIGHT;
+		brightness = 1.0f;
+		current_screen_resolution = RES_1280_720;
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;
 
 		if(FULLSCREEN == true)
@@ -34,7 +36,7 @@ bool ModuleWindow::Init()
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GetResolutionWidth(), GetResolutionHeight(), flags);
 
 		if(window == NULL)
 		{
@@ -52,6 +54,14 @@ bool ModuleWindow::Init()
 	return ret;
 }
 
+update_status ModuleWindow::Update() {
+	// Apply window configuration parameters
+	SDL_SetWindowBrightness(window, brightness);
+	SDL_SetWindowSize(window, GetResolutionWidth(), GetResolutionHeight());
+
+	return UPDATE_CONTINUE;
+}
+
 // Called before quitting
 bool ModuleWindow::CleanUp()
 {
@@ -66,5 +76,43 @@ bool ModuleWindow::CleanUp()
 	//Quit SDL subsystems
 	SDL_Quit();
 	return true;
+}
+
+int ModuleWindow::GetResolutionWidth() {
+	switch (current_screen_resolution) {
+	case RES_640_360:
+		return 640;
+	case RES_854_480:
+		return 854;
+	case RES_1920_1080:
+		return 1920;
+	case RES_2560_1440:
+		return 2560;
+	case RES_3840_2160:
+		return 3840;
+	case RES_7680_4320:
+		return 7680;
+	default:
+		return 1280;
+	}
+}
+
+int ModuleWindow::GetResolutionHeight() {
+	switch (current_screen_resolution) {
+	case RES_640_360:
+		return 360;
+	case RES_854_480:
+		return 480;
+	case RES_1920_1080:
+		return 1080;
+	case RES_2560_1440:
+		return 1440;
+	case RES_3840_2160:
+		return 2160;
+	case RES_7680_4320:
+		return 4320;
+	default:
+		return 720;
+	}
 }
 

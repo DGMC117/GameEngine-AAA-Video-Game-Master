@@ -20,4 +20,6 @@ public:
 	TimerMS frame_timer;
 	TimerMS stable_timer;
 	int stable_frame_counter;
+	int fps_limit;
+	bool vsync;
 };

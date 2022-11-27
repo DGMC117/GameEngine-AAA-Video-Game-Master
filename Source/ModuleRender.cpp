@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "glew.h"
+#include "ModuleEditor.h"
+#include "GUIConfiguration.h"
 
 ModuleRender::ModuleRender()
 {
@@ -18,6 +20,8 @@ ModuleRender::~ModuleRender()
 bool ModuleRender::Init()
 {
 	LOG("Creating Renderer context");
+
+	frame_timer.Start();
 
 	// SDL initialization
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -71,6 +75,16 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
+	// Synchronization and render speed settings
+	if (App->edit->config->vsync) SDL_GL_SetSwapInterval(1);
+	else SDL_GL_SetSwapInterval(0);
+	if (App->edit->config->fps_limit > 0) {
+		Uint32 frame_time = (Uint32) frame_timer.Read();
+		Uint32 goal_time = (Uint32) 1000 / App->edit->config->fps_limit;
+		if (frame_time < goal_time)
+			SDL_Delay(goal_time - frame_time);
+	}
+	frame_timer.Start();
 
 	return UPDATE_CONTINUE;
 }

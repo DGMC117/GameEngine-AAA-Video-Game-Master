@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "TimerMS.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -22,4 +23,6 @@ public:
 
 private:
 	void* context;
+
+	TimerMS frame_timer;
 };
