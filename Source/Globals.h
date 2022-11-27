@@ -16,8 +16,6 @@ enum update_status
 };
 
 // Configuration -----------
-#define FULLSCREEN false
-#define VSYNC true
 #define TITLE "Chief Engine"
 enum screen_resolution {
 	RES_640_360,
@@ -37,6 +35,12 @@ const char* const screen_resolution_names[RES_COUNT] = {
 	"2560x1440",
 	"3840x2160",
 	"7680x4320"
+};
+enum window_mode {
+	BASIC_WINDOW = 0,
+	BORDERLESS_WINDOW,
+	FULLSCREEN_WINDOW,
+	FULL_DESKTOP_WINDOW
 };
 
 // Strings -----------------

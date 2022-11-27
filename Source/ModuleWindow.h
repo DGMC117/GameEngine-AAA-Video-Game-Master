@@ -36,6 +36,7 @@ public:
 
 	float brightness;
 	static int current_screen_resolution;
+	static int current_window_mode;
 };
 
 #endif // __ModuleWindow_H__

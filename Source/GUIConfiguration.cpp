@@ -14,7 +14,7 @@ GUIConfiguration::GUIConfiguration() {
 	frame_timer.Start();
 	stable_timer.Start();
 	stable_frame_counter = 0;
-	vsync = VSYNC;
+	vsync = true;
 }
 
 GUIConfiguration::~GUIConfiguration() {
@@ -56,6 +56,12 @@ void GUIConfiguration::Draw() {
 					(App->window->current_screen_resolution >= 0 && App->window->current_screen_resolution < RES_COUNT) ?
 					screen_resolution_names[App->window->current_screen_resolution] : "Unknown";
 				ImGui::SliderInt("Screen Resolution", &App->window->current_screen_resolution, 0, RES_COUNT - 1, screen_resolution_name);
+				ImGui::Separator();
+				ImGui::Text("Window Mode");
+				ImGui::RadioButton("Basic", &App->window->current_window_mode, BASIC_WINDOW); ImGui::SameLine();
+				ImGui::RadioButton("Borderless", &App->window->current_window_mode, BORDERLESS_WINDOW);
+				ImGui::RadioButton("Fullscreen", &App->window->current_window_mode, FULLSCREEN_WINDOW); ImGui::SameLine();
+				ImGui::RadioButton("Full Desktop", &App->window->current_window_mode, FULL_DESKTOP_WINDOW);
 			}
 			ImGui::End();
 		}

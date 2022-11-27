@@ -3,6 +3,7 @@
 #include "ModuleWindow.h"
 
 int ModuleWindow::current_screen_resolution;
+int ModuleWindow::current_window_mode;
 
 ModuleWindow::ModuleWindow()
 {
@@ -29,12 +30,8 @@ bool ModuleWindow::Init()
 		//Create window
 		brightness = 1.0f;
 		current_screen_resolution = RES_1280_720;
+		current_window_mode = BASIC_WINDOW;
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;
-
-		if(FULLSCREEN == true)
-		{
-			flags |= SDL_WINDOW_FULLSCREEN;
-		}
 
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GetResolutionWidth(), GetResolutionHeight(), flags);
 
@@ -58,6 +55,22 @@ update_status ModuleWindow::Update() {
 	// Apply window configuration parameters
 	SDL_SetWindowBrightness(window, brightness);
 	SDL_SetWindowSize(window, GetResolutionWidth(), GetResolutionHeight());
+	switch (current_window_mode) {
+	case BORDERLESS_WINDOW:
+		SDL_SetWindowBordered(window, SDL_FALSE);
+		SDL_SetWindowFullscreen(window, 0);
+		break;
+	case FULLSCREEN_WINDOW:
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		break;
+	case FULL_DESKTOP_WINDOW:
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		break;
+	default:
+		SDL_SetWindowBordered(window, SDL_TRUE);
+		SDL_SetWindowFullscreen(window, 0);
+		break;
+	}
 
 	return UPDATE_CONTINUE;
 }

@@ -34,8 +34,6 @@ bool ModuleRender::Init()
 
 	context = SDL_GL_CreateContext(App->window->window);
 
-	if (VSYNC) SDL_GL_SetSwapInterval(1);
-
 	// glew initialization
 	GLenum err = glewInit();
 	// TODO: Check for errors
