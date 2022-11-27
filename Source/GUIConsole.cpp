@@ -13,12 +13,14 @@ GUIConsole::~GUIConsole() {
 }
 
 void GUIConsole::ClearLog() {
+
 	for (int i = 0; i < output.Size; i++) free(output[i]);
 	output.clear();
 }
 
 void GUIConsole::AddLog(const char* message) {
 	output.push_back(Strdup(message));
+	if (output.size() > 100) output.erase(output.begin());
 }
 
 void GUIConsole::Draw() {
