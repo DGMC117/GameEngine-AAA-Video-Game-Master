@@ -23,7 +23,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-private:
 	int GetResolutionWidth();
 	int GetResolutionHeight();
 

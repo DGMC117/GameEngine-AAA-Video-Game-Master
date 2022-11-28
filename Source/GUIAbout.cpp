@@ -19,6 +19,7 @@ void GUIAbout::Draw() {
 			ImGui::BulletText("SDL 2.0");
 			ImGui::BulletText("glew 2.1.0");
 			ImGui::BulletText("imgui 1.88");
+			ImGui::BulletText("MathGeoLib 1.5");
 		}
 		if (ImGui::CollapsingHeader("License")) {
 			ImGui::Text("MIT License");

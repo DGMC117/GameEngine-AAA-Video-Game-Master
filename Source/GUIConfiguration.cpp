@@ -43,9 +43,9 @@ void GUIConfiguration::Draw() {
 			if (ImGui::CollapsingHeader("Application")) {
 				char title[50];
 				sprintf_s(title, 50, "Framerate (Frame) %.1f", frame_fps_log[frame_offset]);
-				ImGui::PlotHistogram("##framerateCurr", &frame_fps_log[0], 60, frame_offset, title, 0.0f, 100.0f, ImVec2(310, 100));
+				ImGui::PlotHistogram("##framerateCurr", &frame_fps_log[0], 60, frame_offset, title, 0.0f, 120.0f, ImVec2(310, 100));
 				sprintf_s(title, 50, "Framerate (500ms) %.1f", stable_fps_log[stable_offset]);
-				ImGui::PlotHistogram("##framerateStable", &stable_fps_log[0], 60, stable_offset, title, 0.0f, 100.0f, ImVec2(310, 100));
+				ImGui::PlotHistogram("##framerateStable", &stable_fps_log[0], 60, stable_offset, title, 0.0f, 120.0f, ImVec2(310, 100));
 				sprintf_s(title, 50, "Milliseconds (Frame) %.1f", frame_ms_log[frame_offset]);
 				ImGui::PlotHistogram("##millisecondsCurr", &frame_ms_log[0], 60, frame_offset, title, 0.0f, 40.0f, ImVec2(310, 100));
 				ImGui::Checkbox("Vsync", &vsync);
