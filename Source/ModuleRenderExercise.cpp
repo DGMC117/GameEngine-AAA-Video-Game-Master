@@ -4,7 +4,7 @@
 #include "ModuleProgram.h"
 #include "glew.h"
 #include "MathGeoLib.h"
-#include "ModuleRender.h"
+#include "ModuleCamera.h"
 
 ModuleRenderExercise::ModuleRenderExercise()
 {
@@ -50,9 +50,9 @@ update_status ModuleRenderExercise::Update()
 	glUseProgram(program);
 	// Retrieve Transformation Matrices
 	float4x4 model, view, proj;
-	model = App->renderer->GetModelMatrix();
-	view = App->renderer->GetViewMatrix();
-	proj = App->renderer->GetProjectionMatrix();
+	model = float4x4::identity;
+	view = App->camera->GetViewMatrix();
+	proj = App->camera->GetProjectionMatrix();
 	glUniformMatrix4fv(0, 1, GL_TRUE, &model[0][0]);
 	glUniformMatrix4fv(1, 1, GL_TRUE, &view[0][0]);
 	glUniformMatrix4fv(2, 1, GL_TRUE, &proj[0][0]);
@@ -64,7 +64,7 @@ update_status ModuleRenderExercise::Update()
 	// stride = 0 is equivalent to stride = sizeof(float)*3
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	// 1 triangle to draw = 3 vertices
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	return UPDATE_CONTINUE;
 }

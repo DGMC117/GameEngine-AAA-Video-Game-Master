@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
 
 int ModuleWindow::current_screen_resolution;
 int ModuleWindow::current_window_mode;
@@ -55,6 +56,7 @@ update_status ModuleWindow::Update() {
 	// Apply window configuration parameters
 	SDL_SetWindowBrightness(window, brightness);
 	SDL_SetWindowSize(window, GetResolutionWidth(), GetResolutionHeight());
+	if (SDL_WINDOWEVENT_RESIZED) App->camera->SetFOV();
 	switch (current_window_mode) {
 	case BORDERLESS_WINDOW:
 		SDL_SetWindowBordered(window, SDL_FALSE);

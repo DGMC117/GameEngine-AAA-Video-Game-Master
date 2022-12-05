@@ -22,9 +22,6 @@ public:
 	void WindowResized(unsigned width, unsigned height);
 
 	void* GetContext();
-	float4x4 GetModelMatrix();
-	float4x4 GetViewMatrix();
-	float4x4 GetProjectionMatrix();
 
 private:
 	void* context;

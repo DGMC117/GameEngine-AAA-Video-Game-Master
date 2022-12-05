@@ -110,35 +110,3 @@ void ModuleRender::WindowResized(unsigned width, unsigned height)
 }
 
 void* ModuleRender::GetContext() { return context; }
-
-float4x4 ModuleRender::GetModelMatrix() {
-	return float4x4::identity;
-		/*float4x4::FromTRS(
-		float3(2.0f, 0.0f, 0.0f),
-		float4x4::RotateZ(pi / 4.0f),
-		float3(2.0f, 1.0f, 0.0f));*/
-}
-
-float4x4 ModuleRender::GetViewMatrix() {
-	return float4x4::LookAt(
-		float3(0.0f, 0.0f, 1.0f),
-		float3(0.0f, 0.0f, 10.0f),
-		float3::unitY,
-		float3::unitY);
-}
-
-float4x4 ModuleRender::GetProjectionMatrix() {
-	Frustum frustum;
-
-	frustum.pos = float3(1.0f, 10.0f, 10.0f);
-	frustum.front = -float3::unitZ;
-	frustum.up = float3::unitY;
-
-	frustum.nearPlaneDistance = 0.1f;
-	frustum.farPlaneDistance = 100.0f;
-
-	frustum.verticalFov = math::pi / 4.0f;
-	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * (16.f / 9.f));
-
-	return frustum.ProjectionMatrix();
-}
