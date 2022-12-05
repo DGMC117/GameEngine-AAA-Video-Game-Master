@@ -28,7 +28,6 @@ GUIConfiguration::~GUIConfiguration() {
 
 void GUIConfiguration::Draw() {
 	frame_ms_log[frame_offset] = frame_timer.Read();
-	if (frame_ms_log[frame_offset] == 0) frame_ms_log[frame_offset] = 1;
 	frame_fps_log[frame_offset] = 1000 / frame_ms_log[frame_offset];
 	frame_timer.Start();
 

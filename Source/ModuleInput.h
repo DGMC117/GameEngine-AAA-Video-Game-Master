@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "TimerMS.h"
 
 typedef unsigned __int8 Uint8;
 
@@ -17,4 +18,5 @@ public:
 
 private:
 	const Uint8 *keyboard = NULL;
+	TimerMS delta_timer;
 };

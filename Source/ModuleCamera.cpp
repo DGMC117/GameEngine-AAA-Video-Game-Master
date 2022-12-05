@@ -80,11 +80,13 @@ float4x4 ModuleCamera::GetViewMatrix() {
 		* float3x3::RotateAxisAngle(float3::unitZ, DegToRad(camera_rotation.z));
 
 	float4x4 res = LookAt(float3(0.0f, 0.0f, 0.0f));
-	res[0][3] += camera_abs_translation.x;
-	res[1][3] += camera_abs_translation.y;
-	res[2][3] += camera_abs_translation.z;
-	res.Inverse();
 	float4x4 transform_matrix = float4x4(rotation_matrix);
+	transform_matrix[0][3] += camera_abs_translation.x;
+	transform_matrix[1][3] += camera_abs_translation.y;
+	transform_matrix[2][3] += camera_abs_translation.z;
+	res = transform_matrix * res;
+	res.Inverse();
+	transform_matrix = float4x4::identity;
 	transform_matrix[0][3] = camera_translation.x;
 	transform_matrix[1][3] = camera_translation.y;
 	transform_matrix[2][3] = camera_translation.z;
@@ -94,4 +96,20 @@ float4x4 ModuleCamera::GetViewMatrix() {
 
 float4x4 ModuleCamera::GetProjectionMatrix() {
 	return frustum.ProjectionMatrix();
+}
+
+void ModuleCamera::TranslateForward(float unit) {
+	camera_translation.z += unit;
+}
+void ModuleCamera::TranslateSide(float unit) {
+	camera_translation.x += unit;
+}
+void ModuleCamera::TranslateVerticalAbs(float unit) {
+	camera_abs_translation.y += unit;
+}
+void ModuleCamera::Pitch(float unit) {
+	camera_rotation.x += unit;
+}
+void ModuleCamera::Yaw(float unit) {
+	camera_rotation.y += unit;
 }

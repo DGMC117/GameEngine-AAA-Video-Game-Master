@@ -24,6 +24,12 @@ public:
 	float4x4 GetProjectionMatrix();
 	float4x4 GetViewTransformMatrix();
 
+	void TranslateForward(float unit);
+	void TranslateSide(float unit);
+	void TranslateVerticalAbs(float unit);
+	void Pitch(float unit);
+	void Yaw(float unit);
+
 private:
 	Frustum frustum;
 	float hori_fov;

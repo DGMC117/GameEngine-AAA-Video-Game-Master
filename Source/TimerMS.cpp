@@ -9,5 +9,7 @@ void TimerMS::Start() {
 }
 
 float TimerMS::Read() {
-	return (float) SDL_GetTicks() - start_time;
+	float res = (float)SDL_GetTicks() - start_time;
+	if (res < 1.0f) return 1.0f;
+	return res;
 }
