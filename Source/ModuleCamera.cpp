@@ -7,19 +7,18 @@ ModuleCamera::ModuleCamera() {}
 ModuleCamera::~ModuleCamera() {}
 
 bool ModuleCamera::Init() {
-	camera_pos = float3(0.0f, 0.0f, 1.0f);
-	camera_translation = float3::zero;
-	camera_rotation = float3::zero;
-	camera_abs_translation = float3::zero;
 	camera_move_speed = 2.0f;
 	camera_rotate_speed = 35.0f;
 
-	frustum.type = FrustumType::PerspectiveFrustum;
-	SetPosition(float3::zero);
-	SetOrientation(-float3::unitZ, float3::unitY);
-	SetPlaneDistances(0.1f, 100.0f);
 	hori_fov = 90.0f;
+
+	frustum.type = FrustumType::PerspectiveFrustum;
+	SetPlaneDistances(0.1f, 100.0f);
 	SetFOV();
+	SetPosition(float3(0.0f, 0.0f, 5.0f));
+	float3 target = float3(0.0f, 0.0f, 0.0f);
+	LookAt(target);
+
 	return true;
 }
 
@@ -58,8 +57,8 @@ void ModuleCamera::SetOrientation(const float3 &front, const float3 &up) {
 	frustum.up = up;
 }
 
-float4x4 ModuleCamera::LookAt(float3 target) {
-	float3 forward = target - camera_pos;
+float4x4 ModuleCamera::LookAt(float3 &target) {
+	float3 forward = target - frustum.pos;
 	forward.Normalize();
 	float3 up = float3::unitY;
 	float3 right = Cross(forward, up);
@@ -68,30 +67,20 @@ float4x4 ModuleCamera::LookAt(float3 target) {
 	up.Normalize();
 
 	float4x4 res;
-	res[0][0] = right.x; res[0][1] = up.x; res[0][2] = -forward.x; res[0][3] = camera_pos.x;
-	res[1][0] = right.y; res[1][1] = up.y; res[1][2] = -forward.y; res[1][3] = camera_pos.y;
-	res[2][0] = right.z; res[2][1] = up.z; res[2][2] = -forward.z; res[2][3] = camera_pos.z;
+	res[0][0] = right.x; res[0][1] = up.x; res[0][2] = -forward.x; res[0][3] = frustum.pos.x;
+	res[1][0] = right.y; res[1][1] = up.y; res[1][2] = -forward.y; res[1][3] = frustum.pos.y;
+	res[2][0] = right.z; res[2][1] = up.z; res[2][2] = -forward.z; res[2][3] = frustum.pos.z;
 	res[3][0] = 0.0f;	 res[3][1] = 0.0f; res[3][2] = 0.0f;	   res[3][3] = 1.0f;
+
+	// Trying with frustum
+	frustum.front = forward;
+	frustum.up = up;
+
 	return res;
 }
 
 float4x4 ModuleCamera::GetViewMatrix() {
-	float4x4 res = LookAt(float3(0.0f, 0.0f, 0.0f));
-	float3x3 rotation_matrix =
-		float3x3::RotateAxisAngle(res.WorldX(), DegToRad(camera_rotation.x))
-		* float3x3::RotateAxisAngle(res.WorldY(), DegToRad(camera_rotation.y))
-		* float3x3::RotateAxisAngle(res.WorldZ(), DegToRad(camera_rotation.z));
-	float4x4 transform_matrix = float4x4::identity;
-	transform_matrix[0][3] += camera_abs_translation.x;
-	transform_matrix[1][3] += camera_abs_translation.y;
-	transform_matrix[2][3] += camera_abs_translation.z;
-	res = transform_matrix * res;
-	res.Inverse();
-	transform_matrix = float4x4(rotation_matrix);
-	transform_matrix[0][3] = camera_translation.x;
-	transform_matrix[1][3] = camera_translation.y;
-	transform_matrix[2][3] = camera_translation.z;
-	res = transform_matrix * res;
+	float4x4 res = float4x4(frustum.ViewMatrix());
 	return res;
 }
 
@@ -100,41 +89,69 @@ float4x4 ModuleCamera::GetProjectionMatrix() {
 }
 
 void ModuleCamera::MoveForward() {
-	camera_translation.z += App->delta_time * camera_move_speed;
+	float3 translation = float3(0.0f, 0.0f, App->delta_time * -camera_move_speed);
+	TranslateCamera(translation);
 }
 
 void ModuleCamera::MoveBackwards() {
-	camera_translation.z -= App->delta_time * camera_move_speed;
+	float3 translation = float3(0.0f, 0.0f, App->delta_time * camera_move_speed);
+	TranslateCamera(translation);
 }
 
 void ModuleCamera::MoveLeft() {
-	camera_translation.x += App->delta_time * camera_move_speed;
+	float3 translation = float3(App->delta_time * -camera_move_speed, 0.0f, 0.0f);
+	TranslateCamera(translation);
 }
 
 void ModuleCamera::MoveRight() {
-	camera_translation.x -= App->delta_time * camera_move_speed;
+	float3 translation = float3(App->delta_time * camera_move_speed, 0.0f, 0.0f);
+	TranslateCamera(translation);
 }
 
 void ModuleCamera::MoveUp() {
-	camera_abs_translation.y += App->delta_time * camera_move_speed;
+	float3 translation = float3(0.0f, App->delta_time * camera_move_speed, 0.0f);
+	TranslateCamera(translation);
 }
 
 void ModuleCamera::MoveDown() {
-	camera_abs_translation.y -= App->delta_time * camera_move_speed;
+	float3 translation = float3(0.0f, App->delta_time * -camera_move_speed, 0.0f);
+	TranslateCamera(translation);
 }
 
 void ModuleCamera::PitchClockwise() {
-	camera_rotation.x -= App->delta_time * camera_rotate_speed;
+	float3 rot = float3(App->delta_time * -camera_rotate_speed, 0.0f, 0.0f);
+	RotateCamera(rot);
 }
 
 void ModuleCamera::PitchCounterClockwise() {
-	camera_rotation.x += App->delta_time * camera_rotate_speed;
+	float3 rot = float3(App->delta_time * camera_rotate_speed, 0.0f, 0.0f);
+	RotateCamera(rot);
 }
 
 void ModuleCamera::YawClockwise() {
-	camera_rotation.y -= App->delta_time * camera_rotate_speed;
+	float3 rot = float3(0.0f, App->delta_time * -camera_rotate_speed, 0.0f);
+	RotateCamera(rot);
 }
 
 void ModuleCamera::YawCounterClockwise() {
-	camera_rotation.y += App->delta_time * camera_rotate_speed;
+	float3 rot = float3(0.0f, App->delta_time * camera_rotate_speed, 0.0f);
+	RotateCamera(rot);
+}
+
+void ModuleCamera::RotateCamera(float3& rotation_degs) {
+	float3x3 rotation_matrix =
+		float3x3::RotateAxisAngle(frustum.WorldRight(), DegToRad(rotation_degs.x))
+		* float3x3::RotateAxisAngle(frustum.up, DegToRad(rotation_degs.y))
+		* float3x3::RotateAxisAngle(frustum.front, DegToRad(rotation_degs.z));
+
+	frustum.front = rotation_matrix.MulDir(frustum.front);
+	frustum.front.Normalize();
+	frustum.up = rotation_matrix.MulDir(frustum.up);
+	frustum.up.Normalize();
+}
+
+void ModuleCamera::TranslateCamera(float3& translation) {
+	frustum.pos += frustum.WorldRight() * translation.x;
+	frustum.pos += float3(0.0f, 1.0f, 0.0f) * translation.y;
+	frustum.pos += frustum.front * translation.z;
 }
