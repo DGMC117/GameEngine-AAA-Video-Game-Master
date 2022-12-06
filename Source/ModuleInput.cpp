@@ -17,7 +17,6 @@ ModuleInput::~ModuleInput()
 bool ModuleInput::Init()
 {
 	LOG("Init SDL input event system");
-    delta_timer.Start();
 	bool ret = true;
 	SDL_Init(0);
 
@@ -27,14 +26,23 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 
+    keyW_holdRC = new CameraForwardCommand();
+    keyA_holdRC = new CameraLeftCommand();
+    keyS_holdRC = new CameraBackwardsCommand();
+    keyD_holdRC = new CameraRightCommand();
+    keyQ_holdRC = new CameraDownCommand();
+    keyE_holdRC = new CameraUpCommand();
+    keyUP = new CameraPitchCounterClockwiseCommand();
+    keyLEFT = new CameraYawCounterClockwiseCommand();
+    keyDOWN = new CameraPitchClockwiseCommand();
+    keyRIGHT = new CameraYawClockwiseCommand();
+
 	return ret;
 }
 
 // Called every draw update
 update_status ModuleInput::Update()
 {
-    float delta_time = delta_timer.Read() / 1000.0f;
-    delta_timer.Start();
 
     SDL_Event sdlEvent;
 
@@ -54,36 +62,16 @@ update_status ModuleInput::Update()
 
     keyboard = SDL_GetKeyboardState(NULL);
 
-    if (keyboard[SDL_SCANCODE_W]) {
-        App->camera->TranslateForward(delta_time * 2.0f);
-    }
-    if (keyboard[SDL_SCANCODE_S]) {
-        App->camera->TranslateForward(delta_time * -2.0f);
-    }
-    if (keyboard[SDL_SCANCODE_A]) {
-        App->camera->TranslateSide(delta_time * 2.0f);
-    }
-    if (keyboard[SDL_SCANCODE_D]) {
-        App->camera->TranslateSide(delta_time * -2.0f);
-    }
-    if (keyboard[SDL_SCANCODE_Q]) {
-        App->camera->TranslateVerticalAbs(delta_time * -2.0f);
-    }
-    if (keyboard[SDL_SCANCODE_E]) {
-        App->camera->TranslateVerticalAbs(delta_time * 2.0f);
-    }
-    if (keyboard[SDL_SCANCODE_LEFT]) {
-        App->camera->Yaw(delta_time * -15.0f);
-    }
-    if (keyboard[SDL_SCANCODE_RIGHT]) {
-        App->camera->Yaw(delta_time * 15.0f);
-    }
-    if (keyboard[SDL_SCANCODE_UP]) {
-        App->camera->Pitch(delta_time * -15.0f);
-    }
-    if (keyboard[SDL_SCANCODE_DOWN]) {
-        App->camera->Pitch(delta_time * 15.0f);
-    }
+    if (keyboard[SDL_SCANCODE_W]) keyW_holdRC->execute();
+    if (keyboard[SDL_SCANCODE_S]) keyS_holdRC->execute();
+    if (keyboard[SDL_SCANCODE_A]) keyA_holdRC->execute();
+    if (keyboard[SDL_SCANCODE_D]) keyD_holdRC->execute();
+    if (keyboard[SDL_SCANCODE_Q]) keyQ_holdRC->execute();
+    if (keyboard[SDL_SCANCODE_E]) keyE_holdRC->execute();
+    if (keyboard[SDL_SCANCODE_UP]) keyUP->execute();
+    if (keyboard[SDL_SCANCODE_LEFT]) keyLEFT->execute();
+    if (keyboard[SDL_SCANCODE_DOWN]) keyDOWN->execute();
+    if (keyboard[SDL_SCANCODE_RIGHT]) keyRIGHT->execute();
 
     return UPDATE_CONTINUE;
 }
@@ -93,5 +81,17 @@ bool ModuleInput::CleanUp()
 {
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+
+    delete keyW_holdRC;
+    delete keyA_holdRC;
+    delete keyS_holdRC;
+    delete keyD_holdRC;
+    delete keyQ_holdRC;
+    delete keyE_holdRC;
+    delete keyUP;
+    delete keyLEFT;
+    delete keyDOWN;
+    delete keyRIGHT;
+
 	return true;
 }

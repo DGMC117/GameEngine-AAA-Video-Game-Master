@@ -36,6 +36,8 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	delta_timer.Start();
+
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Init();
 
@@ -45,6 +47,9 @@ bool Application::Init()
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
+	
+	delta_time = delta_timer.Read() / 1000.0f;
+	delta_timer.Start();
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->PreUpdate();

@@ -24,11 +24,16 @@ public:
 	float4x4 GetProjectionMatrix();
 	float4x4 GetViewTransformMatrix();
 
-	void TranslateForward(float unit);
-	void TranslateSide(float unit);
-	void TranslateVerticalAbs(float unit);
-	void Pitch(float unit);
-	void Yaw(float unit);
+	void MoveForward();
+	void MoveBackwards();
+	void MoveLeft();
+	void MoveRight();
+	void MoveUp();
+	void MoveDown();
+	void PitchClockwise();
+	void PitchCounterClockwise();
+	void YawClockwise();
+	void YawCounterClockwise();
 
 private:
 	Frustum frustum;
@@ -38,4 +43,6 @@ private:
 	float3 camera_translation;
 	float3 camera_rotation;
 	float3 camera_abs_translation;
+	float camera_move_speed;
+	float camera_rotate_speed;
 };
