@@ -7,7 +7,7 @@ ModuleCamera::ModuleCamera() {}
 ModuleCamera::~ModuleCamera() {}
 
 bool ModuleCamera::Init() {
-	camera_pos = float3(0.0f, 0.0f, 5.0f);
+	camera_pos = float3(0.0f, 0.0f, 1.0f);
 	camera_translation = float3::zero;
 	camera_rotation = float3::zero;
 	camera_abs_translation = float3::zero;
@@ -77,16 +77,16 @@ float4x4 ModuleCamera::LookAt(float3 target) {
 
 float4x4 ModuleCamera::GetViewMatrix() {
 	float4x4 res = LookAt(float3(0.0f, 0.0f, 0.0f));
+	float3x3 rotation_matrix =
+		float3x3::RotateAxisAngle(res.WorldX(), DegToRad(camera_rotation.x))
+		* float3x3::RotateAxisAngle(res.WorldY(), DegToRad(camera_rotation.y))
+		* float3x3::RotateAxisAngle(res.WorldZ(), DegToRad(camera_rotation.z));
 	float4x4 transform_matrix = float4x4::identity;
 	transform_matrix[0][3] += camera_abs_translation.x;
 	transform_matrix[1][3] += camera_abs_translation.y;
 	transform_matrix[2][3] += camera_abs_translation.z;
 	res = transform_matrix * res;
 	res.Inverse();
-	float3x3 rotation_matrix =
-		float3x3::RotateAxisAngle(res.WorldX(), DegToRad(camera_rotation.x))
-		* float3x3::RotateAxisAngle(res.WorldY(), DegToRad(camera_rotation.y))
-		* float3x3::RotateAxisAngle(res.WorldZ(), DegToRad(camera_rotation.z));
 	transform_matrix = float4x4(rotation_matrix);
 	transform_matrix[0][3] = camera_translation.x;
 	transform_matrix[1][3] = camera_translation.y;
