@@ -170,22 +170,22 @@ void ModuleCamera::YawCounterClockwise() {
 }
 
 void ModuleCamera::PitchClockwiseMouse() {
-	float3 rot = float3(App->delta_time * App->input->mouse_motion.xrel * 3, 0.0f, 0.0f);
+	float3 rot = float3(App->delta_time * -App->input->mouse_motion.yrel * 3, 0.0f, 0.0f);
 	RotateCamera(rot);
 }
 
 void ModuleCamera::PitchCounterClockwiseMouse() {
-	float3 rot = float3(App->delta_time * App->input->mouse_motion.xrel * 3, 0.0f, 0.0f);
+	float3 rot = float3(App->delta_time * -App->input->mouse_motion.yrel * 3, 0.0f, 0.0f);
 	RotateCamera(rot);
 }
 
 void ModuleCamera::YawClockwiseMouse() {
-	float3 rot = float3(0.0f, App->delta_time * App->input->mouse_motion.yrel * 3, 0.0f);
+	float3 rot = float3(0.0f, App->delta_time * -App->input->mouse_motion.xrel * 3, 0.0f);
 	RotateCamera(rot);
 }
 
 void ModuleCamera::YawCounterClockwiseMouse() {
-	float3 rot = float3(0.0f, App->delta_time * App->input->mouse_motion.yrel * 3, 0.0f);
+	float3 rot = float3(0.0f, App->delta_time * -App->input->mouse_motion.xrel * 3, 0.0f);
 	RotateCamera(rot);
 }
 

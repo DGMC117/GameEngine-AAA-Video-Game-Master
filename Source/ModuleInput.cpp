@@ -79,10 +79,10 @@ update_status ModuleInput::Update()
             case SDL_MOUSEMOTION:
                 mouse_motion = sdlEvent.motion;
                 if (mouse_right_button) {
-                    if (mouse_motion.xrel < 0) keyLEFT->execute();
-                    else if (mouse_motion.xrel > 0) keyRIGHT->execute();
-                    if (mouse_motion.yrel < 0) keyUP->execute();
-                    else if (mouse_motion.yrel > 0) keyDOWN->execute();
+                    if (mouse_motion.xrel < 0) mouseRIGHT_motionLEFT->execute();
+                    else if (mouse_motion.xrel > 0) mouseRIGHT_motionRIGHT->execute();
+                    if (mouse_motion.yrel < 0) mouseRIGHT_motionUP->execute();
+                    else if (mouse_motion.yrel > 0) mouseRIGHT_motionDOWN->execute();
                 }
                 break;
         }
