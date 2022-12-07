@@ -32,10 +32,18 @@ bool ModuleInput::Init()
     keyD_holdRC = new CameraRightCommand();
     keyQ_holdRC = new CameraDownCommand();
     keyE_holdRC = new CameraUpCommand();
+    keyW_holdRC_LSHIFT = new CameraForwardFastCommand();
+    keyA_holdRC_LSHIFT = new CameraLeftFastCommand();
+    keyS_holdRC_LSHIFT = new CameraBackwardsFastCommand();
+    keyD_holdRC_LSHIFT = new CameraRightFastCommand();
+    keyQ_holdRC_LSHIFT = new CameraDownFastCommand();
+    keyE_holdRC_LSHIFT = new CameraUpFastCommand();
     keyUP = new CameraPitchCounterClockwiseCommand();
     keyLEFT = new CameraYawCounterClockwiseCommand();
     keyDOWN = new CameraPitchClockwiseCommand();
     keyRIGHT = new CameraYawClockwiseCommand();
+    keyM = new CameraRollCounterClockwiseCommand();
+    keyN = new CameraRollClockwiseCommand();
 
 	return ret;
 }
@@ -62,16 +70,18 @@ update_status ModuleInput::Update()
 
     keyboard = SDL_GetKeyboardState(NULL);
 
-    if (keyboard[SDL_SCANCODE_W]) keyW_holdRC->execute();
-    if (keyboard[SDL_SCANCODE_S]) keyS_holdRC->execute();
-    if (keyboard[SDL_SCANCODE_A]) keyA_holdRC->execute();
-    if (keyboard[SDL_SCANCODE_D]) keyD_holdRC->execute();
-    if (keyboard[SDL_SCANCODE_Q]) keyQ_holdRC->execute();
-    if (keyboard[SDL_SCANCODE_E]) keyE_holdRC->execute();
+    if (keyboard[SDL_SCANCODE_W]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyW_holdRC_LSHIFT->execute() : keyW_holdRC->execute());
+    if (keyboard[SDL_SCANCODE_S]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyS_holdRC_LSHIFT->execute() : keyS_holdRC->execute());
+    if (keyboard[SDL_SCANCODE_A]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyA_holdRC_LSHIFT->execute() : keyA_holdRC->execute());
+    if (keyboard[SDL_SCANCODE_D]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyD_holdRC_LSHIFT->execute() : keyD_holdRC->execute());
+    if (keyboard[SDL_SCANCODE_Q]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyQ_holdRC_LSHIFT->execute() : keyQ_holdRC->execute());
+    if (keyboard[SDL_SCANCODE_E]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyE_holdRC_LSHIFT->execute() : keyE_holdRC->execute());
     if (keyboard[SDL_SCANCODE_UP]) keyUP->execute();
     if (keyboard[SDL_SCANCODE_LEFT]) keyLEFT->execute();
     if (keyboard[SDL_SCANCODE_DOWN]) keyDOWN->execute();
     if (keyboard[SDL_SCANCODE_RIGHT]) keyRIGHT->execute();
+    if (keyboard[SDL_SCANCODE_M]) keyM->execute();
+    if (keyboard[SDL_SCANCODE_N]) keyN->execute();
 
     return UPDATE_CONTINUE;
 }
@@ -88,10 +98,18 @@ bool ModuleInput::CleanUp()
     delete keyD_holdRC;
     delete keyQ_holdRC;
     delete keyE_holdRC;
+    delete keyW_holdRC_LSHIFT;
+    delete keyA_holdRC_LSHIFT;
+    delete keyS_holdRC_LSHIFT;
+    delete keyD_holdRC_LSHIFT;
+    delete keyQ_holdRC_LSHIFT;
+    delete keyE_holdRC_LSHIFT;
     delete keyUP;
     delete keyLEFT;
     delete keyDOWN;
     delete keyRIGHT;
+    delete keyM;
+    delete keyN;
 
 	return true;
 }

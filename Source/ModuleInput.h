@@ -27,8 +27,16 @@ private:
 	Command *keyD_holdRC = nullptr;
 	Command *keyQ_holdRC = nullptr;
 	Command *keyE_holdRC = nullptr;
+	Command* keyW_holdRC_LSHIFT = nullptr;
+	Command* keyA_holdRC_LSHIFT = nullptr;
+	Command* keyS_holdRC_LSHIFT = nullptr;
+	Command* keyD_holdRC_LSHIFT = nullptr;
+	Command* keyQ_holdRC_LSHIFT = nullptr;
+	Command* keyE_holdRC_LSHIFT = nullptr;
 	Command *keyUP = nullptr;
 	Command *keyLEFT = nullptr;
-	Command *keyDOWN = nullptr;
-	Command *keyRIGHT = nullptr;
+	Command* keyDOWN = nullptr;
+	Command* keyRIGHT = nullptr;
+	Command* keyM = nullptr;
+	Command* keyN = nullptr;
 };

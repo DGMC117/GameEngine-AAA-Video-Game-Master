@@ -89,12 +89,12 @@ float4x4 ModuleCamera::GetProjectionMatrix() {
 }
 
 void ModuleCamera::MoveForward() {
-	float3 translation = float3(0.0f, 0.0f, App->delta_time * -camera_move_speed);
+	float3 translation = float3(0.0f, 0.0f, App->delta_time * camera_move_speed);
 	TranslateCamera(translation);
 }
 
 void ModuleCamera::MoveBackwards() {
-	float3 translation = float3(0.0f, 0.0f, App->delta_time * camera_move_speed);
+	float3 translation = float3(0.0f, 0.0f, App->delta_time * -camera_move_speed);
 	TranslateCamera(translation);
 }
 
@@ -118,6 +118,36 @@ void ModuleCamera::MoveDown() {
 	TranslateCamera(translation);
 }
 
+void ModuleCamera::MoveForwardFast() {
+	float3 translation = float3(0.0f, 0.0f, App->delta_time * camera_move_speed * 3);
+	TranslateCamera(translation);
+}
+
+void ModuleCamera::MoveBackwardsFast() {
+	float3 translation = float3(0.0f, 0.0f, App->delta_time * -camera_move_speed * 3);
+	TranslateCamera(translation);
+}
+
+void ModuleCamera::MoveLeftFast() {
+	float3 translation = float3(App->delta_time * -camera_move_speed * 3, 0.0f, 0.0f);
+	TranslateCamera(translation);
+}
+
+void ModuleCamera::MoveRightFast() {
+	float3 translation = float3(App->delta_time * camera_move_speed * 3, 0.0f, 0.0f);
+	TranslateCamera(translation);
+}
+
+void ModuleCamera::MoveUpFast() {
+	float3 translation = float3(0.0f, App->delta_time * camera_move_speed * 3, 0.0f);
+	TranslateCamera(translation);
+}
+
+void ModuleCamera::MoveDownFast() {
+	float3 translation = float3(0.0f, App->delta_time * -camera_move_speed * 3, 0.0f);
+	TranslateCamera(translation);
+}
+
 void ModuleCamera::PitchClockwise() {
 	float3 rot = float3(App->delta_time * -camera_rotate_speed, 0.0f, 0.0f);
 	RotateCamera(rot);
@@ -135,6 +165,16 @@ void ModuleCamera::YawClockwise() {
 
 void ModuleCamera::YawCounterClockwise() {
 	float3 rot = float3(0.0f, App->delta_time * camera_rotate_speed, 0.0f);
+	RotateCamera(rot);
+}
+
+void ModuleCamera::RollClockwise() {
+	float3 rot = float3(0.0f, 0.0f, App->delta_time * -camera_rotate_speed);
+	RotateCamera(rot);
+}
+
+void ModuleCamera::RollCounterClockwise() {
+	float3 rot = float3(0.0f, 0.0f, App->delta_time * camera_rotate_speed);
 	RotateCamera(rot);
 }
 

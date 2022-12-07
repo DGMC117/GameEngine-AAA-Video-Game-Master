@@ -37,6 +37,36 @@ public:
 	virtual void execute() { App->camera->MoveDown(); }
 };
 
+class CameraForwardFastCommand : public Command {
+public:
+	virtual void execute() { App->camera->MoveForwardFast(); }
+};
+
+class CameraBackwardsFastCommand : public Command {
+public:
+	virtual void execute() { App->camera->MoveBackwardsFast(); }
+};
+
+class CameraLeftFastCommand : public Command {
+public:
+	virtual void execute() { App->camera->MoveLeftFast(); }
+};
+
+class CameraRightFastCommand : public Command {
+public:
+	virtual void execute() { App->camera->MoveRightFast(); }
+};
+
+class CameraUpFastCommand : public Command {
+public:
+	virtual void execute() { App->camera->MoveUpFast(); }
+};
+
+class CameraDownFastCommand : public Command {
+public:
+	virtual void execute() { App->camera->MoveDownFast(); }
+};
+
 class CameraPitchClockwiseCommand : public Command {
 public:
 	virtual void execute() { App->camera->PitchClockwise(); }
@@ -55,4 +85,14 @@ public:
 class CameraYawCounterClockwiseCommand : public Command {
 public:
 	virtual void execute() { App->camera->YawCounterClockwise(); }
+};
+
+class CameraRollClockwiseCommand : public Command {
+public:
+	virtual void execute() { App->camera->RollClockwise(); }
+};
+
+class CameraRollCounterClockwiseCommand : public Command {
+public:
+	virtual void execute() { App->camera->RollCounterClockwise(); }
 };

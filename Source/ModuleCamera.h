@@ -30,10 +30,18 @@ public:
 	void MoveRight();
 	void MoveUp();
 	void MoveDown();
+	void MoveForwardFast();
+	void MoveBackwardsFast();
+	void MoveLeftFast();
+	void MoveRightFast();
+	void MoveUpFast();
+	void MoveDownFast();
 	void PitchClockwise();
 	void PitchCounterClockwise();
 	void YawClockwise();
 	void YawCounterClockwise();
+	void RollClockwise();
+	void RollCounterClockwise();
 
 	void RotateCamera(float3& rotation_degs);
 	void TranslateCamera(float3& translation);
