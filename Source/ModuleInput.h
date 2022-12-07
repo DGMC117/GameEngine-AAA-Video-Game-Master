@@ -19,7 +19,7 @@ public:
 
 private:
 	const Uint8 *keyboard = NULL;
-	const SDL_MouseButtonEvent *mouse = NULL;
+	bool mouse_right_button;
 
 	Command *keyW_holdRC = nullptr;
 	Command *keyA_holdRC = nullptr;
@@ -39,4 +39,11 @@ private:
 	Command* keyRIGHT = nullptr;
 	Command* keyM = nullptr;
 	Command* keyN = nullptr;
+	Command* mouseRIGHT_motionRIGHT = nullptr;
+	Command* mouseRIGHT_motionLEFT = nullptr;
+	Command* mouseRIGHT_motionUP = nullptr;
+	Command* mouseRIGHT_motionDOWN = nullptr;
+
+public:
+	SDL_MouseMotionEvent mouse_motion;
 };

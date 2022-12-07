@@ -42,6 +42,10 @@ public:
 	void YawCounterClockwise();
 	void RollClockwise();
 	void RollCounterClockwise();
+	void PitchClockwiseMouse();
+	void PitchCounterClockwiseMouse();
+	void YawClockwiseMouse();
+	void YawCounterClockwiseMouse();
 
 	void RotateCamera(float3& rotation_degs);
 	void TranslateCamera(float3& translation);

@@ -96,3 +96,23 @@ class CameraRollCounterClockwiseCommand : public Command {
 public:
 	virtual void execute() { App->camera->RollCounterClockwise(); }
 };
+
+class CameraPitchClockwiseMouseCommand : public Command {
+public:
+	virtual void execute() { App->camera->PitchClockwiseMouse(); }
+};
+
+class CameraPitchCounterClockwiseMouseCommand : public Command {
+public:
+	virtual void execute() { App->camera->PitchCounterClockwiseMouse(); }
+};
+
+class CameraYawClockwiseMouseCommand : public Command {
+public:
+	virtual void execute() { App->camera->YawClockwiseMouse(); }
+};
+
+class CameraYawCounterClockwiseMouseCommand : public Command {
+public:
+	virtual void execute() { App->camera->YawCounterClockwiseMouse(); }
+};

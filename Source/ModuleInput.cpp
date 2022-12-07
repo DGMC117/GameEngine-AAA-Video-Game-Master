@@ -44,6 +44,12 @@ bool ModuleInput::Init()
     keyRIGHT = new CameraYawClockwiseCommand();
     keyM = new CameraRollCounterClockwiseCommand();
     keyN = new CameraRollClockwiseCommand();
+    mouseRIGHT_motionRIGHT = new CameraYawCounterClockwiseMouseCommand();
+    mouseRIGHT_motionLEFT = new CameraYawClockwiseMouseCommand();
+    mouseRIGHT_motionUP = new CameraPitchCounterClockwiseMouseCommand();
+    mouseRIGHT_motionDOWN = new CameraPitchClockwiseMouseCommand();
+
+    mouse_right_button = false;
 
 	return ret;
 }
@@ -64,18 +70,35 @@ update_status ModuleInput::Update()
                 if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED || sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
                     App->renderer->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                if (sdlEvent.button.button == SDL_BUTTON_RIGHT) mouse_right_button = true;
+                break;
+            case SDL_MOUSEBUTTONUP:
+                if (sdlEvent.button.button == SDL_BUTTON_RIGHT) mouse_right_button = false;
+                break;
+            case SDL_MOUSEMOTION:
+                mouse_motion = sdlEvent.motion;
+                if (mouse_right_button) {
+                    if (mouse_motion.xrel < 0) keyLEFT->execute();
+                    else if (mouse_motion.xrel > 0) keyRIGHT->execute();
+                    if (mouse_motion.yrel < 0) keyUP->execute();
+                    else if (mouse_motion.yrel > 0) keyDOWN->execute();
+                }
+                break;
         }
         ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
     }
 
     keyboard = SDL_GetKeyboardState(NULL);
 
-    if (keyboard[SDL_SCANCODE_W]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyW_holdRC_LSHIFT->execute() : keyW_holdRC->execute());
-    if (keyboard[SDL_SCANCODE_S]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyS_holdRC_LSHIFT->execute() : keyS_holdRC->execute());
-    if (keyboard[SDL_SCANCODE_A]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyA_holdRC_LSHIFT->execute() : keyA_holdRC->execute());
-    if (keyboard[SDL_SCANCODE_D]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyD_holdRC_LSHIFT->execute() : keyD_holdRC->execute());
-    if (keyboard[SDL_SCANCODE_Q]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyQ_holdRC_LSHIFT->execute() : keyQ_holdRC->execute());
-    if (keyboard[SDL_SCANCODE_E]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyE_holdRC_LSHIFT->execute() : keyE_holdRC->execute());
+    if (mouse_right_button) {
+        if (keyboard[SDL_SCANCODE_W]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyW_holdRC_LSHIFT->execute() : keyW_holdRC->execute());
+        if (keyboard[SDL_SCANCODE_S]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyS_holdRC_LSHIFT->execute() : keyS_holdRC->execute());
+        if (keyboard[SDL_SCANCODE_A]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyA_holdRC_LSHIFT->execute() : keyA_holdRC->execute());
+        if (keyboard[SDL_SCANCODE_D]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyD_holdRC_LSHIFT->execute() : keyD_holdRC->execute());
+        if (keyboard[SDL_SCANCODE_Q]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyQ_holdRC_LSHIFT->execute() : keyQ_holdRC->execute());
+        if (keyboard[SDL_SCANCODE_E]) (keyboard[SDL_SCANCODE_LSHIFT] ? keyE_holdRC_LSHIFT->execute() : keyE_holdRC->execute());
+    }
     if (keyboard[SDL_SCANCODE_UP]) keyUP->execute();
     if (keyboard[SDL_SCANCODE_LEFT]) keyLEFT->execute();
     if (keyboard[SDL_SCANCODE_DOWN]) keyDOWN->execute();
