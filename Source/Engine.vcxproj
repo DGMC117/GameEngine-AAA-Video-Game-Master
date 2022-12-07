@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\libs\MathGeoLib-1.5;.\libs\imgui;.\libs\SDL\include;.\libs\glew-2.1.0\include\GL</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\libs\DirectXTex-oct2022\DDSView;.\libs\DirectXTex-oct2022\DirectXTex;.\libs\DirectXTex-oct2022;.\libs\MathGeoLib-1.5;.\libs\imgui;.\libs\SDL\include;.\libs\glew-2.1.0\include\GL</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
