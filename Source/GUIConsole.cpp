@@ -4,7 +4,7 @@ GUIConsole::GUIConsole() {
 	ClearLog();
 	auto_scroll = true;
 	scroll_to_bottom = false;
-	con_open = new bool(true);
+	con_open = new bool(false);
 }
 
 GUIConsole::~GUIConsole() {

@@ -22,10 +22,10 @@ bool ModuleRenderExercise::Init()
 
 	// Create VBO
 	float vtx_data[] = { 
-		-1.0f, 1.0f, 0.0f, 
-		 1.0f, 1.0f, 0.0f, 
-		-1.0f, 2.0f, 0.0f,
-		 1.0f, 2.0f, 0.0f
+		-0.5f, 1.0f, 0.0f, 
+		 0.5f, 1.0f, 0.0f, 
+		-0.5f, 2.0f, 0.0f,
+		 0.5f, 2.0f, 0.0f
 	};
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
