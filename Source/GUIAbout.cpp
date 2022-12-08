@@ -21,6 +21,7 @@ void GUIAbout::Draw() {
 			ImGui::BulletText("imgui 1.88");
 			ImGui::BulletText("MathGeoLib 1.5");
 			ImGui::BulletText("DirectXTex October 2022");
+			ImGui::BulletText("assimp 5.2.5");
 		}
 		if (ImGui::CollapsingHeader("License")) {
 			ImGui::Text("MIT License");
