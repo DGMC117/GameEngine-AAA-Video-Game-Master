@@ -1,5 +1,4 @@
 #include "ModuleTexture.h"
-#include "DirectXTex.h"
 
 ModuleTexture::ModuleTexture() {}
 
@@ -23,4 +22,13 @@ update_status ModuleTexture::PostUpdate() {
 
 bool ModuleTexture::CleanUp() {
 	return true;
+}
+
+bool ModuleTexture::LoadTexture(const wchar_t* file_name, TexMetadata* metadata, ScratchImage& texture) {
+	HRESULT res = E_FAIL;
+
+	res = LoadFromDDSFile(file_name, DDS_FLAGS_NONE, metadata, texture);
+	if (FAILED(res)) res = LoadFromTGAFile(file_name, TGA_FLAGS_NONE, metadata, texture);
+	if (FAILED(res)) res = LoadFromWICFile(file_name, WIC_FLAGS_NONE, metadata, texture);
+	return SUCCEEDED(res);
 }

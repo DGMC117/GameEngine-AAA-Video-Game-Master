@@ -48,6 +48,8 @@ enum window_mode {
 #define REPO_RELEASE_LINK "https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/releases"
 #define REPO_ISSUES_LINK "https://github.com/DGMC117/GameEngine-AAA-Video-Game-Master/issues"
 
+static const wchar_t* BABOON_TEX_PATH = L"..\\Textures\\BaboonTexture.png";
+
 static void APIENTRY openglCallbackFunction(
 	GLenum source,
 	GLenum type,
